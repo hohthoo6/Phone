@@ -77,4 +77,8 @@
     <string name="call_notification_channel">通话状态</string>
     <string name="call_notification_channel_high_priority">通话状态（高优先级）</string>
     <string name="calling_accounts">通话账号</string>
+    <string name="vibrate_on_answer">接听振动</string>
+    <string name="vibrate_on_hang_up">挂断振动</string>
+    <string name="hide_blocked_from_call_log">隐藏通话记录里的已拦截号码</string>
+    <string name="hide_blocked_unknown_from_call_log">隐藏拦截的陌生号码通话记录</string>
 </resources>

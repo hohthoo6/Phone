@@ -103,6 +103,10 @@ class SettingsActivity : SimpleActivity() {
         setupOnContactClick()
         setupDialPadOpen()
         setupGroupSubsequentCalls()
+        setupVibrateOnAnswer()
+        setupVibrateOnHangUp()
+        setupHideBlockedFromCallLog()
+        setupHideBlockedUnknownFromCallLog()
         setupStartNameWithSurname()
         setupFormatPhoneNumbers()
         setupDialpadVibrations()
@@ -311,6 +315,46 @@ class SettingsActivity : SimpleActivity() {
         binding.settingsFormatPhoneNumbersHolder.setOnClickListener {
             binding.settingsFormatPhoneNumbers.toggle()
             config.formatPhoneNumbers = binding.settingsFormatPhoneNumbers.isChecked
+        }
+    }
+
+    private fun setupVibrateOnAnswer() {
+        binding.apply {
+            settingsVibrateOnAnswer.isChecked = config.vibrateOnAnswer
+            settingsVibrateOnAnswerHolder.setOnClickListener {
+                settingsVibrateOnAnswer.toggle()
+                config.vibrateOnAnswer = settingsVibrateOnAnswer.isChecked
+            }
+        }
+    }
+
+    private fun setupVibrateOnHangUp() {
+        binding.apply {
+            settingsVibrateOnHangUp.isChecked = config.vibrateOnHangUp
+            settingsVibrateOnHangUpHolder.setOnClickListener {
+                settingsVibrateOnHangUp.toggle()
+                config.vibrateOnHangUp = settingsVibrateOnHangUp.isChecked
+            }
+        }
+    }
+
+    private fun setupHideBlockedFromCallLog() {
+        binding.apply {
+            settingsHideBlockedFromCallLog.isChecked = config.hideBlockedFromCallLog
+            settingsHideBlockedFromCallLogHolder.setOnClickListener {
+                settingsHideBlockedFromCallLog.toggle()
+                config.hideBlockedFromCallLog = settingsHideBlockedFromCallLog.isChecked
+            }
+        }
+    }
+
+    private fun setupHideBlockedUnknownFromCallLog() {
+        binding.apply {
+            settingsHideBlockedUnknownFromCallLog.isChecked = config.hideBlockedUnknownFromCallLog
+            settingsHideBlockedUnknownFromCallLogHolder.setOnClickListener {
+                settingsHideBlockedUnknownFromCallLog.toggle()
+                config.hideBlockedUnknownFromCallLog = settingsHideBlockedUnknownFromCallLog.isChecked
+            }
         }
     }
 

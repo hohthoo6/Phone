@@ -28,4 +28,9 @@ private const val PATH = "org.fossify.phone.action."
 const val ACCEPT_CALL = PATH + "ACCEPT_CALL"
 const val DECLINE_CALL = PATH + "DECLINE_CALL"
 
+const val VIBRATE_ON_ANSWER = "vibrate_on_answer"
+const val VIBRATE_ON_HANG_UP = "vibrate_on_hang_up"
+const val HIDE_BLOCKED_FROM_CALL_LOG = "hide_blocked_from_call_log"
+const val HIDE_BLOCKED_UNKNOWN_FROM_CALL_LOG = "hide_blocked_unknown_from_call_log"
+
 const val DIALPAD_TONE_LENGTH_MS = 150L // The length of DTMF tones in milliseconds

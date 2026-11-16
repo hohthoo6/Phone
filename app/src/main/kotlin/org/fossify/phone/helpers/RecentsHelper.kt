@@ -12,6 +12,7 @@ import org.fossify.commons.helpers.*
 import org.fossify.commons.models.contacts.Contact
 import org.fossify.phone.R
 import org.fossify.phone.activities.SimpleActivity
+import org.fossify.phone.extensions.config
 import org.fossify.phone.extensions.getAvailableSIMCardLabels
 import org.fossify.phone.models.RecentCall
 import org.fossify.phone.models.SIMAccount
@@ -278,10 +279,43 @@ class RecentsHelper(private val context: Context) {
             } while (cursor.moveToNext() && recentCalls.size < queryLimit)
         }
 
+        if (!context.config.hideBlockedFromCallLog && !context.config.hideBlockedUnknownFromCallLog) {
+            return recentCalls
+        }
+
         val blockedNumbers = context.getBlockedNumbers()
 
-        return recentCalls
-            .filter { !context.isNumberBlocked(it.phoneNumber, blockedNumbers) }
+        // Suffixes of the numbers belonging to contacts, used to tell a stranger from a known caller.
+        val contactNumberSuffixes = HashSet<String>()
+        contacts.forEach { contact ->
+            contact.phoneNumbers.forEach { phoneNumber ->
+                contactNumberSuffixes.add(phoneNumber.value.getComparableSuffix())
+            }
+        }
+
+        return recentCalls.filter { call ->
+            val isBlockedEntry = call.type == Calls.BLOCKED_TYPE
+            val isRejectedEntry = call.type == Calls.REJECTED_TYPE
+            val isOnBlockedList = context.isNumberBlocked(call.phoneNumber, blockedNumbers)
+            val isContact = contactNumberSuffixes.contains(call.phoneNumber.getComparableSuffix())
+
+            when {
+                // Hide numbers on the blocked list and calls the system marked as blocked
+                context.config.hideBlockedFromCallLog && (isOnBlockedList || isBlockedEntry) -> false
+                // Hide blocked/rejected calls coming from strangers, e.g. blocked by another blocker app
+                context.config.hideBlockedUnknownFromCallLog && (isBlockedEntry || isRejectedEntry) && !isContact && !isOnBlockedList -> false
+                else -> true
+            }
+        }
+    }
+
+    private fun String.getComparableSuffix(): String {
+        val digits = filter { it.isDigit() }
+        return if (digits.length >= COMPARABLE_PHONE_NUMBER_LENGTH) {
+            digits.takeLast(COMPARABLE_PHONE_NUMBER_LENGTH)
+        } else {
+            digits
+        }
     }
 
     fun removeRecentCalls(ids: List<Int>, callback: () -> Unit) {

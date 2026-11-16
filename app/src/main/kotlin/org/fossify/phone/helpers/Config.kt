@@ -135,4 +135,19 @@ class Config(context: Context) : BaseConfig(context) {
     var alwaysShowFullscreen: Boolean
         get() = prefs.getBoolean(ALWAYS_SHOW_FULLSCREEN, false)
         set(alwaysShowFullscreen) = prefs.edit().putBoolean(ALWAYS_SHOW_FULLSCREEN, alwaysShowFullscreen).apply()
+    var vibrateOnAnswer: Boolean
+        get() = prefs.getBoolean(VIBRATE_ON_ANSWER, false)
+        set(vibrateOnAnswer) = prefs.edit().putBoolean(VIBRATE_ON_ANSWER, vibrateOnAnswer).apply()
+
+    var vibrateOnHangUp: Boolean
+        get() = prefs.getBoolean(VIBRATE_ON_HANG_UP, false)
+        set(vibrateOnHangUp) = prefs.edit().putBoolean(VIBRATE_ON_HANG_UP, vibrateOnHangUp).apply()
+
+    var hideBlockedUnknownFromCallLog: Boolean
+        get() = prefs.getBoolean(HIDE_BLOCKED_UNKNOWN_FROM_CALL_LOG, true)
+        set(hideBlockedUnknownFromCallLog) = prefs.edit().putBoolean(HIDE_BLOCKED_UNKNOWN_FROM_CALL_LOG, hideBlockedUnknownFromCallLog).apply()
+
+    var hideBlockedFromCallLog: Boolean
+        get() = prefs.getBoolean(HIDE_BLOCKED_FROM_CALL_LOG, true)
+        set(hideBlockedFromCallLog) = prefs.edit().putBoolean(HIDE_BLOCKED_FROM_CALL_LOG, hideBlockedFromCallLog).apply()
 }

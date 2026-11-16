@@ -13,6 +13,7 @@ import org.fossify.phone.extensions.keyguardManager
 import org.fossify.phone.extensions.powerManager
 import org.fossify.phone.helpers.CallManager
 import org.fossify.phone.helpers.CallNotificationManager
+import org.fossify.phone.helpers.CallVibration
 import org.fossify.phone.helpers.NoCall
 import org.fossify.phone.models.Events
 import org.greenrobot.eventbus.EventBus
@@ -20,10 +21,24 @@ import org.greenrobot.eventbus.EventBus
 class CallService : InCallService() {
     private val callNotificationManager by lazy { CallNotificationManager(this) }
 
+    // Calls which already produced their "answered" / "hang up" vibration, so we don't vibrate twice
+    private val answeredCalls = mutableSetOf<Call>()
+    private val hungUpCalls = mutableSetOf<Call>()
+
     private val callListener = object : Call.Callback() {
         override fun onStateChanged(call: Call, state: Int) {
             super.onStateChanged(call, state)
+
+            if (state == Call.STATE_ACTIVE) {
+                if (config.vibrateOnAnswer && answeredCalls.add(call)) {
+                    CallVibration.vibrateOnAnswered(this@CallService)
+                }
+            }
+
             if (state == Call.STATE_DISCONNECTED || state == Call.STATE_DISCONNECTING) {
+                if (config.vibrateOnHangUp && hungUpCalls.add(call)) {
+                    CallVibration.vibrateOnHangUp(this@CallService)
+                }
                 callNotificationManager.cancelNotification()
             } else {
                 callNotificationManager.setupNotification()
@@ -68,6 +83,8 @@ class CallService : InCallService() {
     override fun onCallRemoved(call: Call) {
         super.onCallRemoved(call)
         call.unregisterCallback(callListener)
+        answeredCalls.remove(call)
+        hungUpCalls.remove(call)
         val wasPrimaryCall = call == CallManager.getPrimaryCall()
         CallManager.onCallRemoved(call)
         if (CallManager.getPhoneState() == NoCall) {

@@ -95,4 +95,8 @@
         Haven't found some strings? There's more at
         https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
     -->
+    <string name="vibrate_on_answer">Vibrate when a call is answered</string>
+    <string name="vibrate_on_hang_up">Vibrate when a call ends</string>
+    <string name="hide_blocked_from_call_log">Hide blocked numbers from the call log</string>
+    <string name="hide_blocked_unknown_from_call_log">Hide blocked calls from unknown numbers</string>
 </resources>

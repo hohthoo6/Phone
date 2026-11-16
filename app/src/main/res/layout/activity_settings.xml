@@ -296,6 +296,66 @@
                 android:text="@string/calls" />
 
             <RelativeLayout
+                android:id="@+id/settings_vibrate_on_answer_holder"
+                style="@style/SettingsHolderSwitchStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <org.fossify.commons.views.MyMaterialSwitch
+                    android:id="@+id/settings_vibrate_on_answer"
+                    style="@style/SettingsSwitchStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/vibrate_on_answer" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/settings_vibrate_on_hang_up_holder"
+                style="@style/SettingsHolderSwitchStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <org.fossify.commons.views.MyMaterialSwitch
+                    android:id="@+id/settings_vibrate_on_hang_up"
+                    style="@style/SettingsSwitchStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/vibrate_on_hang_up" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/settings_hide_blocked_from_call_log_holder"
+                style="@style/SettingsHolderSwitchStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <org.fossify.commons.views.MyMaterialSwitch
+                    android:id="@+id/settings_hide_blocked_from_call_log"
+                    style="@style/SettingsSwitchStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hide_blocked_from_call_log" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/settings_hide_blocked_unknown_from_call_log_holder"
+                style="@style/SettingsHolderSwitchStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <org.fossify.commons.views.MyMaterialSwitch
+                    android:id="@+id/settings_hide_blocked_unknown_from_call_log"
+                    style="@style/SettingsSwitchStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hide_blocked_unknown_from_call_log" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/settings_group_subsequent_calls_holder"
                 style="@style/SettingsHolderSwitchStyle"
                 android:layout_width="match_parent"
