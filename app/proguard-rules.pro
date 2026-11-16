@@ -21,3 +21,5 @@
     public static <1> INSTANCE;
     kotlinx.serialization.KSerializer serializer(...);
 }
+-dontwarn java.beans.**
+-dontwarn freemarker.**
