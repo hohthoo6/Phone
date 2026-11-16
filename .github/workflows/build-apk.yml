@@ -24,16 +24,28 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v4
-
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
+      - name: Install required SDK components
+        run: |
+          yes | sdkmanager --licenses > /dev/null 2>&1 || true
+          sdkmanager "platform-tools" "platforms;android-36" "build-tools;36.0.0"
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
       - name: Build debug APK
-        run: chmod +x ./gradlew && ./gradlew assembleFossDebug --no-daemon
+        run: |
+          chmod +x ./gradlew
+          ./gradlew assembleFossDebug --no-daemon --stacktrace
+
+      - name: Show APK files
+        if: always()
+        run: find app/build/outputs -name "*.apk" -maxdepth 5 || true
 
       - name: Upload APK
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: phone-foss-debug
